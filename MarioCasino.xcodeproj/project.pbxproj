@@ -11,6 +11,12 @@
 		EA92FBF12A835D1500BA9242 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA92FBF02A835D1500BA9242 /* ContentView.swift */; };
 		EA92FBF32A835D1600BA9242 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA92FBF22A835D1600BA9242 /* Assets.xcassets */; };
 		EA92FBF62A835D1600BA9242 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA92FBF52A835D1600BA9242 /* Preview Assets.xcassets */; };
+		EA92FBFD2A835D5300BA9242 /* CasinoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA92FBFC2A835D5300BA9242 /* CasinoView.swift */; };
+		EA92FC002A83613000BA9242 /* Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA92FBFF2A83613000BA9242 /* Modifiers.swift */; };
+		EA92FC022A83634300BA9242 /* DiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA92FC012A83634300BA9242 /* DiceView.swift */; };
+		EA92FC052A8366FC00BA9242 /* spin.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EA92FC042A8366FC00BA9242 /* spin.mp3 */; };
+		EA92FC072A83677400BA9242 /* PlaySound.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA92FC062A83677400BA9242 /* PlaySound.swift */; };
+		EA92FC092A83725700BA9242 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA92FC082A83725700BA9242 /* TestView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +25,12 @@
 		EA92FBF02A835D1500BA9242 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		EA92FBF22A835D1600BA9242 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EA92FBF52A835D1600BA9242 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		EA92FBFC2A835D5300BA9242 /* CasinoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CasinoView.swift; sourceTree = "<group>"; };
+		EA92FBFF2A83613000BA9242 /* Modifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modifiers.swift; sourceTree = "<group>"; };
+		EA92FC012A83634300BA9242 /* DiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiceView.swift; sourceTree = "<group>"; };
+		EA92FC042A8366FC00BA9242 /* spin.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = spin.mp3; sourceTree = "<group>"; };
+		EA92FC062A83677400BA9242 /* PlaySound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaySound.swift; sourceTree = "<group>"; };
+		EA92FC082A83725700BA9242 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,8 +63,12 @@
 		EA92FBED2A835D1500BA9242 /* MarioCasino */ = {
 			isa = PBXGroup;
 			children = (
+				EA92FBFE2A83612000BA9242 /* Helper */,
 				EA92FBEE2A835D1500BA9242 /* MarioCasinoApp.swift */,
 				EA92FBF02A835D1500BA9242 /* ContentView.swift */,
+				EA92FBFC2A835D5300BA9242 /* CasinoView.swift */,
+				EA92FC082A83725700BA9242 /* TestView.swift */,
+				EA92FC012A83634300BA9242 /* DiceView.swift */,
 				EA92FBF22A835D1600BA9242 /* Assets.xcassets */,
 				EA92FBF42A835D1600BA9242 /* Preview Content */,
 			);
@@ -65,6 +81,24 @@
 				EA92FBF52A835D1600BA9242 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		EA92FBFE2A83612000BA9242 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				EA92FC032A8366EA00BA9242 /* Sound Effects */,
+				EA92FBFF2A83613000BA9242 /* Modifiers.swift */,
+				EA92FC062A83677400BA9242 /* PlaySound.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
+		EA92FC032A8366EA00BA9242 /* Sound Effects */ = {
+			isa = PBXGroup;
+			children = (
+				EA92FC042A8366FC00BA9242 /* spin.mp3 */,
+			);
+			path = "Sound Effects";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -127,6 +161,7 @@
 			files = (
 				EA92FBF62A835D1600BA9242 /* Preview Assets.xcassets in Resources */,
 				EA92FBF32A835D1600BA9242 /* Assets.xcassets in Resources */,
+				EA92FC052A8366FC00BA9242 /* spin.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,7 +172,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA92FC092A83725700BA9242 /* TestView.swift in Sources */,
+				EA92FC002A83613000BA9242 /* Modifiers.swift in Sources */,
+				EA92FC072A83677400BA9242 /* PlaySound.swift in Sources */,
+				EA92FC022A83634300BA9242 /* DiceView.swift in Sources */,
 				EA92FBF12A835D1500BA9242 /* ContentView.swift in Sources */,
+				EA92FBFD2A835D5300BA9242 /* CasinoView.swift in Sources */,
 				EA92FBEF2A835D1500BA9242 /* MarioCasinoApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
