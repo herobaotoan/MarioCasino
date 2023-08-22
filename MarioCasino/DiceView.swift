@@ -14,7 +14,7 @@ struct DiceView: View {
         Image(image)
             .resizable()
             .frame(width: 100, height: 100)
-            .padding(20)
+            .padding(10)
     }
 }
 
