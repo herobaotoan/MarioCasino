@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EA6571C62A95D12F00D8AAC8 /* EnemyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6571C52A95D12F00D8AAC8 /* EnemyView.swift */; };
+		EA6571C82A95E54700D8AAC8 /* fail.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EA6571C72A95E54700D8AAC8 /* fail.mp3 */; };
+		EA6571CA2A95E5F100D8AAC8 /* crowd-cheer.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EA6571C92A95E5F100D8AAC8 /* crowd-cheer.mp3 */; };
+		EA6571CC2A95E5F900D8AAC8 /* win.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EA6571CB2A95E5F900D8AAC8 /* win.mp3 */; };
+		EA6571CE2A95E9CB00D8AAC8 /* HowToPlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6571CD2A95E9CB00D8AAC8 /* HowToPlayView.swift */; };
 		EA92FBEF2A835D1500BA9242 /* MarioCasinoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA92FBEE2A835D1500BA9242 /* MarioCasinoApp.swift */; };
 		EA92FBF12A835D1500BA9242 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA92FBF02A835D1500BA9242 /* ContentView.swift */; };
 		EA92FBF32A835D1600BA9242 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA92FBF22A835D1600BA9242 /* Assets.xcassets */; };
@@ -20,6 +25,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EA6571C52A95D12F00D8AAC8 /* EnemyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EnemyView.swift; path = ../../../Downloads/EnemyView.swift; sourceTree = "<group>"; };
+		EA6571C72A95E54700D8AAC8 /* fail.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = fail.mp3; sourceTree = "<group>"; };
+		EA6571C92A95E5F100D8AAC8 /* crowd-cheer.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "crowd-cheer.mp3"; sourceTree = "<group>"; };
+		EA6571CB2A95E5F900D8AAC8 /* win.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = win.mp3; sourceTree = "<group>"; };
+		EA6571CD2A95E9CB00D8AAC8 /* HowToPlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowToPlayView.swift; sourceTree = "<group>"; };
 		EA92FBEB2A835D1500BA9242 /* MarioCasino.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MarioCasino.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA92FBEE2A835D1500BA9242 /* MarioCasinoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarioCasinoApp.swift; sourceTree = "<group>"; };
 		EA92FBF02A835D1500BA9242 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -67,8 +77,10 @@
 				EA92FBEE2A835D1500BA9242 /* MarioCasinoApp.swift */,
 				EA92FBF02A835D1500BA9242 /* ContentView.swift */,
 				EA92FBFC2A835D5300BA9242 /* CasinoView.swift */,
+				EA6571CD2A95E9CB00D8AAC8 /* HowToPlayView.swift */,
 				EA92FC082A83725700BA9242 /* TestView.swift */,
 				EA92FC012A83634300BA9242 /* DiceView.swift */,
+				EA6571C52A95D12F00D8AAC8 /* EnemyView.swift */,
 				EA92FBF22A835D1600BA9242 /* Assets.xcassets */,
 				EA92FBF42A835D1600BA9242 /* Preview Content */,
 			);
@@ -97,6 +109,9 @@
 			isa = PBXGroup;
 			children = (
 				EA92FC042A8366FC00BA9242 /* spin.mp3 */,
+				EA6571C72A95E54700D8AAC8 /* fail.mp3 */,
+				EA6571C92A95E5F100D8AAC8 /* crowd-cheer.mp3 */,
+				EA6571CB2A95E5F900D8AAC8 /* win.mp3 */,
 			);
 			path = "Sound Effects";
 			sourceTree = "<group>";
@@ -159,8 +174,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA6571C82A95E54700D8AAC8 /* fail.mp3 in Resources */,
 				EA92FBF62A835D1600BA9242 /* Preview Assets.xcassets in Resources */,
 				EA92FBF32A835D1600BA9242 /* Assets.xcassets in Resources */,
+				EA6571CA2A95E5F100D8AAC8 /* crowd-cheer.mp3 in Resources */,
+				EA6571CC2A95E5F900D8AAC8 /* win.mp3 in Resources */,
 				EA92FC052A8366FC00BA9242 /* spin.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -175,6 +193,8 @@
 				EA92FC092A83725700BA9242 /* TestView.swift in Sources */,
 				EA92FC002A83613000BA9242 /* Modifiers.swift in Sources */,
 				EA92FC072A83677400BA9242 /* PlaySound.swift in Sources */,
+				EA6571CE2A95E9CB00D8AAC8 /* HowToPlayView.swift in Sources */,
+				EA6571C62A95D12F00D8AAC8 /* EnemyView.swift in Sources */,
 				EA92FC022A83634300BA9242 /* DiceView.swift in Sources */,
 				EA92FBF12A835D1500BA9242 /* ContentView.swift in Sources */,
 				EA92FBFD2A835D5300BA9242 /* CasinoView.swift in Sources */,

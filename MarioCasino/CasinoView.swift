@@ -11,21 +11,28 @@ struct CasinoView: View {
     @State var level = 0
 
     let dices = ["dice-blue-1", "dice-blue-2", "dice-blue-3", "dice-blue-4", "dice-blue-5", "dice-blue-6"]
-    let EnemyHPList = [36, 48, 80, 130, 200, 300]
-    let EnemyATKList = [20, 30, 30, 60, 100, 150]
+    let EnemyHPList = [140, 250, 400, 600, 1000, 1500]
+    let EnemyATKList = [40, 30, 30, 60, 100, 150]
 
-    @State var CurrentEnemyHP = EnemyHPList[level]
-    @State var CurrentPlayerHP = Stats[1]
+    @State var CurrentEnemyHP = 140
+    @State var CurrentPlayerHP = 100
 
     @State var Stats = [10, 100]
     @State var EXP = 0
-    var playerLevel = 1
-
+    @State var playerLevel = 1
+    
+    //The lower the higher you are on leaderboard
     @State var score = 0
     @State var currentDices = [0,1,2,3]
     
-
+    @State var enemyHitAnimation = false
+    @State var playerHitAnimation = false
+    
     @State var chooseStatUI = false
+    @State var informationUI = false
+    @State var resultUI = false
+    
+    @State var levelResult = "WON!"
 
     @State var timeRemaining = 10
     @State var isTimerRunning = false
@@ -38,6 +45,7 @@ struct CasinoView: View {
     }
     
     func attack(){
+        enemyHitAnimation.toggle()
         for i in currentDices {
             CurrentEnemyHP -= (i + 1) * Stats[0]
         }
@@ -46,8 +54,9 @@ struct CasinoView: View {
 
     func enemyAttack()
     {
+        playerHitAnimation.toggle()
         CurrentPlayerHP -= EnemyATKList[level]
-        if CurrentEnemyHP <= 0
+        if CurrentPlayerHP <= 0
         {
             //Go back 1 level if mario died
             //Reset to level 0 if mario died at level 0
@@ -55,6 +64,9 @@ struct CasinoView: View {
                 EXP += 1   
                 level -= 1
             }
+            levelResult = "DIED!"
+            playSound(sound: "fail", type: "mp3")
+            resultUI = true
             updateLevel()
         }
     }
@@ -62,8 +74,16 @@ struct CasinoView: View {
     func updateEnemy()
     {
         if CurrentEnemyHP <= 0 {
+            levelResult = "WON!"
+            playSound(sound: "win", type: "mp3")
+            resultUI = true
             updateEXP()
-            level += 1
+            if level < 5
+            {
+                level += 1
+                playSound(sound: "crowd-cheer", type: "mp3")
+                //TODO: WON
+            }
             updateLevel()
         } else {
             enemyAttack()
@@ -96,14 +116,24 @@ struct CasinoView: View {
             LinearGradient(gradient: Gradient(colors: [Color.red, Color.purple]), startPoint: .leading, endPoint: .bottom)
                 .edgesIgnoringSafeArea(.all)
             
+            VStack(spacing: 100){
+                Spacer()
+                
+                Image("mario")
+                    .frame(maxHeight: 0)
+                    .offset(x: playerHitAnimation ? -10 : 0)
+                    .animation(Animation.default.repeatCount(5))
+            }
+            
             VStack{
-                Image("logo")
-                    .resizable()
-                    .frame(width: 350, height: 250)
-                Text("Score: \(score)")
-                    .modifier(TextWhiteModifier(fontSize: 20))
-                    .modifier(CapsuleColorModifier(color: Color.black.opacity(0.3)))
-                EnemyView(level: level, HP: CurrentEnemyHP)
+                Button{
+                    informationUI = true
+                } label: {
+                    Text("HOW TO PLAY")
+                        .modifier(TextWhiteModifier(fontSize: 20))
+                        .modifier(CapsuleColorModifier(color: Color.blue.opacity(0.7)))
+                }
+                EnemyView(level: level, HP: CurrentEnemyHP, hit: $enemyHitAnimation)
                 HStack{
                     DiceView(image: dices[currentDices[0]])
                     DiceView(image: dices[currentDices[1]])
@@ -113,7 +143,10 @@ struct CasinoView: View {
                     DiceView(image: dices[currentDices[3]])
                 }
                 Button {
+                    //The lower the higher you are on leaderboard
+                    score += 1;
                     isTimerRunning = true;
+                    playSound(sound: "spin", type: "mp3")
                 } label: {
                     Text("Roll")
                         .modifier(TextWhiteModifier(fontSize: 40))
@@ -132,30 +165,75 @@ struct CasinoView: View {
                         }
                     }
                 }
+                HStack{
+                    Text("ATK: \(Stats[0])")
+                        .modifier(TextWhiteModifier(fontSize: 20))
+                        .modifier(CapsuleColorModifier(color: Color.black.opacity(0.7)))
+                    Text("HP: \(CurrentPlayerHP)")
+                        .modifier(TextWhiteModifier(fontSize: 20))
+                        .modifier(CapsuleColorModifier(color: Color.green.opacity(0.7)))
+                }
             }
             if chooseStatUI == true {
-                VStack{
-                    Text("LEVEL UP!!!")
-                        .modifier(TextWhiteModifier(fontSize: 40))
-                        .modifier(CapsuleColorModifier(color: Color.red.opacity(0.7)))
-                    Text("Choose one:")
-                    HStack{
-                        Button{
-                            Stats[0] += 2
-                            chooseStatUI = false
-                        } label: {
-                            Text("Strength")
+                ZStack{
+                    Rectangle()
+                        .fill(Color.black.opacity(0.8))
+                        .edgesIgnoringSafeArea(.all)
+                    RoundedRectangle(cornerRadius: 30)
+                        .fill(Color.white.opacity(0.9))
+                        .frame(width: 300,height: 200)
+                    VStack{
+                        Text("LEVEL UP!!!")
+                            .modifier(TextWhiteModifier(fontSize: 40))
+                            .modifier(CapsuleColorModifier(color: Color.blue.opacity(0.7)))
+                        Text("Choose one:")
+                        HStack{
+                            Button{
+                                Stats[0] += 2
+                                chooseStatUI = false
+                            } label: {
+                                Text("Strength")
+                                    .modifier(TextWhiteModifier(fontSize: 20))
+                                    .modifier(CapsuleColorModifier(color: Color.red.opacity(0.7)))
+                            }
+                            Button{
+                                Stats[1] += 40
+                                CurrentPlayerHP = Stats[1]
+                                chooseStatUI = false
+                            } label: {
+                                Text("Vitality")
+                                    .modifier(TextWhiteModifier(fontSize: 20))
+                                    .modifier(CapsuleColorModifier(color: Color.green.opacity(0.7)))
+                            }
                         }
+                    }
+                }
+            }
+            if resultUI == true {
+                ZStack{
+                    Rectangle()
+                        .fill(Color.black.opacity(0.8))
+                        .edgesIgnoringSafeArea(.all)
+                    RoundedRectangle(cornerRadius: 30)
+                        .fill(Color.white.opacity(0.9))
+                        .frame(width: 300,height: 200)
+                    VStack{
+                        Text("YOU \(levelResult)")
+                            .modifier(TextWhiteModifier(fontSize: 40))
+                            .modifier(CapsuleColorModifier(color: Color.blue.opacity(0.7)))
                         Button{
-                            Stats[1] += 40
-                            chooseStatUI = false
+                            resultUI = false
                         } label: {
-                            Text("Vitality")
+                            Text("Continue")
+                                .modifier(TextWhiteModifier(fontSize: 20))
+                                .modifier(CapsuleColorModifier(color: Color.red.opacity(0.7)))
                         }
                     }
                 }
             }
             
+        }.sheet(isPresented: $informationUI){
+            HowToPlayView()
         }
     }
 }
