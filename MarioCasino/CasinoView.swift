@@ -8,32 +8,35 @@
 import SwiftUI
 
 struct CasinoView: View {
-    @State var level = 0
+    //
 
     let dices = ["dice-blue-1", "dice-blue-2", "dice-blue-3", "dice-blue-4", "dice-blue-5", "dice-blue-6"]
-    let EnemyHPList = [140, 250, 400, 600, 1000, 1500]
-    let EnemyATKList = [40, 30, 30, 60, 100, 150]
-
+    //Enemy properties
+    let EnemyHPList = [140, 250, 400, 500, 800, 1000]
+    let EnemyATKList = [40, 30, 30, 60, 80, 100]
+    //Level properties
+    @State var level = 0
     @State var CurrentEnemyHP = 140
     @State var CurrentPlayerHP = 100
-
+    //Player properties
     @State var Stats = [10, 100]
     @State var EXP = 0
     @State var playerLevel = 1
-    
     //The lower the higher you are on leaderboard
     @State var score = 0
     @State var currentDices = [0,1,2,3]
-    
+    //Animation toggler
     @State var enemyHitAnimation = false
     @State var playerHitAnimation = false
-    
-    @State var chooseStatUI = false
+    //UI toggler
+    @State var mainMenuUI = true
     @State var informationUI = false
+    @State var leaderboardUI = false
     @State var resultUI = false
-    
+    @State var chooseStatUI = false
+    @State var victoryUI = false
     @State var levelResult = "WON!"
-
+    //Timer
     @State var timeRemaining = 10
     @State var isTimerRunning = false
     let timer = Timer.publish(every: 0.2, on: .main, in: .common).autoconnect()
@@ -45,7 +48,9 @@ struct CasinoView: View {
     }
     
     func attack(){
+        //Start enemy shaking animation
         enemyHitAnimation.toggle()
+        //Decrease enemy HP by each dice multiply with player ATK
         for i in currentDices {
             CurrentEnemyHP -= (i + 1) * Stats[0]
         }
@@ -54,7 +59,9 @@ struct CasinoView: View {
 
     func enemyAttack()
     {
+        //Start player shaking animation
         playerHitAnimation.toggle()
+        //Decrease player HP by enemy ATK
         CurrentPlayerHP -= EnemyATKList[level]
         if CurrentPlayerHP <= 0
         {
@@ -73,6 +80,7 @@ struct CasinoView: View {
     
     func updateEnemy()
     {
+        //Advance 1 level when enemy died
         if CurrentEnemyHP <= 0 {
             levelResult = "WON!"
             playSound(sound: "win", type: "mp3")
@@ -83,8 +91,15 @@ struct CasinoView: View {
                 level += 1
                 playSound(sound: "crowd-cheer", type: "mp3")
                 //TODO: WON
+                victoryUI = true
+                //Reset everything
+                level = 0
+                Stats = [10, 100]
+                EXP = 0
+                playerLevel = 1
             }
             updateLevel()
+        //If enemy still alive, attack player
         } else {
             enemyAttack()
         }
@@ -92,7 +107,9 @@ struct CasinoView: View {
 
     func updateEXP()
     {
+        //Gain exp base on current level
         EXP += level + 1
+        //The higher player level the harder to level up
         if (EXP >= playerLevel * 2)
         {
             levelUp()
@@ -101,21 +118,25 @@ struct CasinoView: View {
     
     func updateLevel()
     {
+        //Reset enemy and player HP
         CurrentEnemyHP = EnemyHPList[level]
         CurrentPlayerHP = Stats[1]
     }
 
     func levelUp()
     {
+        //Enable level up UI
         playerLevel += 1
         chooseStatUI = true
+        EXP = 0
     }
 
     var body: some View {
         ZStack{
+            //Background
             LinearGradient(gradient: Gradient(colors: [Color.red, Color.purple]), startPoint: .leading, endPoint: .bottom)
                 .edgesIgnoringSafeArea(.all)
-            
+            //Mario image on the bottom background
             VStack(spacing: 100){
                 Spacer()
                 
@@ -126,6 +147,7 @@ struct CasinoView: View {
             }
             
             VStack{
+                //How to play button
                 Button{
                     informationUI = true
                 } label: {
@@ -133,7 +155,9 @@ struct CasinoView: View {
                         .modifier(TextWhiteModifier(fontSize: 20))
                         .modifier(CapsuleColorModifier(color: Color.blue.opacity(0.7)))
                 }
+                //ENEMY
                 EnemyView(level: level, HP: CurrentEnemyHP, hit: $enemyHitAnimation)
+
                 HStack{
                     DiceView(image: dices[currentDices[0]])
                     DiceView(image: dices[currentDices[1]])
@@ -210,28 +234,17 @@ struct CasinoView: View {
                 }
             }
             if resultUI == true {
-                ZStack{
-                    Rectangle()
-                        .fill(Color.black.opacity(0.8))
-                        .edgesIgnoringSafeArea(.all)
-                    RoundedRectangle(cornerRadius: 30)
-                        .fill(Color.white.opacity(0.9))
-                        .frame(width: 300,height: 200)
-                    VStack{
-                        Text("YOU \(levelResult)")
-                            .modifier(TextWhiteModifier(fontSize: 40))
-                            .modifier(CapsuleColorModifier(color: Color.blue.opacity(0.7)))
-                        Button{
-                            resultUI = false
-                        } label: {
-                            Text("Continue")
-                                .modifier(TextWhiteModifier(fontSize: 20))
-                                .modifier(CapsuleColorModifier(color: Color.red.opacity(0.7)))
-                        }
-                    }
-                }
+                ResultView(enable: $resultUI, result: $levelResult)
             }
-            
+            if victoryUI == true {
+                VictoryView(enable: $victoryUI, score: $score)
+            }
+            if mainMenuUI == true {
+                MenuView(enable: $mainMenuUI, howToPlayViewEnable: $informationUI, leaderboardViewEnable: $leaderboardUI)
+            }
+            if leaderboardUI == true {
+                //LEADERBORDVIEW   
+            }
         }.sheet(isPresented: $informationUI){
             HowToPlayView()
         }
