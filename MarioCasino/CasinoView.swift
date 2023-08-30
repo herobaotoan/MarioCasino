@@ -12,8 +12,8 @@ struct CasinoView: View {
 
     let dices = ["dice-blue-1", "dice-blue-2", "dice-blue-3", "dice-blue-4", "dice-blue-5", "dice-blue-6"]
     //Enemy properties
-    let EnemyHPList = [140, 250, 400, 500, 800, 1000]
-    let EnemyATKList = [40, 30, 30, 60, 80, 100]
+    let EnemyHPList = [140, 250, 400, 500, 700, 800]
+    let EnemyATKList = [40, 30, 30, 50, 70, 80]
     //Level properties
     @State var level = 0
     @State var CurrentEnemyHP = 140
@@ -34,8 +34,11 @@ struct CasinoView: View {
     @State var leaderboardUI = false
     @State var resultUI = false
     @State var chooseStatUI = false
-    @State var victoryUI = false
+    @State var victoryUI = true
     @State var levelResult = "WON!"
+    //Leaderboard
+    @State var username = "MARIO"
+    @State var leaderboard : [String: Int] = UserDefaults.standard.object(forKey: "Leaderboard") as? [String: Int] ?? [:]
     //Timer
     @State var timeRemaining = 10
     @State var isTimerRunning = false
@@ -89,8 +92,8 @@ struct CasinoView: View {
             if level < 5
             {
                 level += 1
+            } else {
                 playSound(sound: "crowd-cheer", type: "mp3")
-                //TODO: WON
                 victoryUI = true
                 //Reset everything
                 level = 0
@@ -147,13 +150,22 @@ struct CasinoView: View {
             }
             
             VStack{
-                //How to play button
-                Button{
-                    informationUI = true
-                } label: {
-                    Text("HOW TO PLAY")
-                        .modifier(TextWhiteModifier(fontSize: 20))
-                        .modifier(CapsuleColorModifier(color: Color.blue.opacity(0.7)))
+                HStack{
+                    //How to play button
+                    Button{
+                        informationUI = true
+                    } label: {
+                        Text("HOW TO PLAY")
+                            .modifier(TextWhiteModifier(fontSize: 20))
+                            .modifier(CapsuleColorModifier(color: Color.blue.opacity(0.7)))
+                    }
+                    Button{
+                        mainMenuUI = true
+                    } label: {
+                        Text("BACK")
+                            .modifier(TextWhiteModifier(fontSize: 20))
+                            .modifier(CapsuleColorModifier(color: Color.blue.opacity(0.7)))
+                    }
                 }
                 //ENEMY
                 EnemyView(level: level, HP: CurrentEnemyHP, hit: $enemyHitAnimation)
@@ -213,7 +225,7 @@ struct CasinoView: View {
                         Text("Choose one:")
                         HStack{
                             Button{
-                                Stats[0] += 2
+                                Stats[0] += 5
                                 chooseStatUI = false
                             } label: {
                                 Text("Strength")
@@ -237,13 +249,13 @@ struct CasinoView: View {
                 ResultView(enable: $resultUI, result: $levelResult)
             }
             if victoryUI == true {
-                VictoryView(enable: $victoryUI, score: $score)
+                VictoryView(enable: $victoryUI, score: $score, username: $username, error: false, dictionary: $leaderboard)
             }
             if mainMenuUI == true {
                 MenuView(enable: $mainMenuUI, howToPlayViewEnable: $informationUI, leaderboardViewEnable: $leaderboardUI)
             }
             if leaderboardUI == true {
-                //LEADERBORDVIEW   
+                LeaderboardView(enable: $leaderboardUI, dictionary: $leaderboard)
             }
         }.sheet(isPresented: $informationUI){
             HowToPlayView()
