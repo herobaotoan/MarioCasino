@@ -19,10 +19,12 @@ struct LeaderboardView: View {
     let ACM3 = Achievement(id: 3, name: "Win the game", imgName: "ACM3")
     
     var body: some View {
+        //Sort leaderboard dictionary to ascending
         let sortedDict = dictionary.sorted(by: {$0.value < $1.value})
         let keys = sortedDict.map{$0.key}
         let values = sortedDict.map{$0.value}
         ZStack{
+            //Background
             RoundedRectangle(cornerRadius: 20)
                 .fill(.white)
                 .edgesIgnoringSafeArea(.all)

@@ -41,6 +41,7 @@ struct CasinoView: View {
     @State var leaderboard : [String: Int] = UserDefaults.standard.object(forKey: "Leaderboard") as? [String: Int] ?? ["Developer":99]
     //Achievement
     @State var achievement : [Bool] = UserDefaults.standard.array(forKey: "Achievement") as? [Bool] ?? [false,false,false]
+    @State var achievementProgression : [Int] = UserDefaults.standard.array(forKey: "Progression") as? [Int] ?? [0,0,0]
     @State var ACM1 = 0
     //Timer
     @State var timeRemaining = 10
@@ -61,8 +62,15 @@ struct CasinoView: View {
             CurrentEnemyHP -= (i + 1) * Stats[0]
         }
         updateEnemy()
-        //Achievement
+        //Achievement Roll 100 times
         ACM1 += 1
+        achievementProgression[0] = ACM1
+        UserDefaults.standard.set(achievementProgression, forKey: "Progression")
+        if ACM1 >= 100
+        {
+            achievement[0] = true
+            UserDefaults.standard.set(achievement, forKey: "Achievement")
+        }
     }
 
     func enemyAttack()
