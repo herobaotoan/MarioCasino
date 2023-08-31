@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct ResultView: View {
+    @Binding var enable: Bool
+    @Binding var result: String
     var body: some View {
-        @Binding var enable: Bool
-        @Binding var result: String
         ZStack{
             Rectangle()
                 .fill(Color.black.opacity(0.8))

@@ -8,39 +8,43 @@
 import SwiftUI
 
 struct VictoryView: View {
+    @Binding var enable: Bool
+    @Binding var score: Int
+    @Binding var username: String
+    @State var error = false
+    @Binding var dictionary: [String: Int]
     var body: some View {
-        @Binding var enable: Bool
-        @Binding var score: Int
-        @State var username: String
-        @State var error = false
         ZStack {
             Rectangle()
                 .fill(Color.black.opacity(0.8))
                 .edgesIgnoringSafeArea(.all)
             RoundedRectangle(cornerRadius: 30)
-                .fill(Color.white.opacity(0.9))
-                .frame(width: 300,height: 200)
+                .fill(Color.green.opacity(0.9))
+                .frame(width: 350,height: 500)
             VStack{
                 Text("VICTORY!")
                     .modifier(TextWhiteModifier(fontSize: 40))
                     .modifier(CapsuleColorModifier(color: Color.blue.opacity(0.7)))
                 Text("You have defeated Bowser! Mushroom Kingdom is now save once again.")
                     .modifier(TextWhiteModifier(fontSize: 20))
+                    .frame(width: 300)
                 Text("You rolled: \(score) times.")
                     .modifier(TextWhiteModifier(fontSize: 20))
+                    .frame(width: 300)
                 TextField("Enter name:", text: $username)
-                    .modifier(CapsuleColorModifier(color: Color.black.opacity(0.7)))
+                    .modifier(CapsuleColorModifier(color: Color.white.opacity(0.7)))
+                    .frame(width: 300)
                 Button{
-                    //TODO: LEADERBOARD
-                    
                     if username != ""
                     {
+                        dictionary.updateValue(score, forKey: username)
+                        UserDefaults.standard.set(dictionary, forKey: "Leaderboard")
                         enable = false
                     } else {
                         error = true
                     }
                 } label: {
-                    Text("NEW GAME")
+                    Text("New Game")
                         .modifier(TextWhiteModifier(fontSize: 20))
                         .modifier(CapsuleColorModifier(color: Color.red.opacity(0.7)))
                 }
