@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EA2A1CC22AA06E97002FE7B5 /* Achievement.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2A1CC12AA06E97002FE7B5 /* Achievement.swift */; };
+		EA2A1CC42AA06FB7002FE7B5 /* AchievementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2A1CC32AA06FB7002FE7B5 /* AchievementView.swift */; };
 		EA6571C62A95D12F00D8AAC8 /* EnemyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6571C52A95D12F00D8AAC8 /* EnemyView.swift */; };
 		EA6571C82A95E54700D8AAC8 /* fail.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EA6571C72A95E54700D8AAC8 /* fail.mp3 */; };
 		EA6571CA2A95E5F100D8AAC8 /* crowd-cheer.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EA6571C92A95E5F100D8AAC8 /* crowd-cheer.mp3 */; };
@@ -28,6 +30,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EA2A1CC12AA06E97002FE7B5 /* Achievement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Achievement.swift; sourceTree = "<group>"; };
+		EA2A1CC32AA06FB7002FE7B5 /* AchievementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementView.swift; sourceTree = "<group>"; };
 		EA6571C52A95D12F00D8AAC8 /* EnemyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EnemyView.swift; path = ../../../Downloads/EnemyView.swift; sourceTree = "<group>"; };
 		EA6571C72A95E54700D8AAC8 /* fail.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = fail.mp3; sourceTree = "<group>"; };
 		EA6571C92A95E5F100D8AAC8 /* crowd-cheer.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "crowd-cheer.mp3"; sourceTree = "<group>"; };
@@ -85,7 +89,9 @@
 				EA92FBFC2A835D5300BA9242 /* CasinoView.swift */,
 				EA6571CD2A95E9CB00D8AAC8 /* HowToPlayView.swift */,
 				EA92FC082A83725700BA9242 /* LeaderboardView.swift */,
+				EA2A1CC12AA06E97002FE7B5 /* Achievement.swift */,
 				EA92FC012A83634300BA9242 /* DiceView.swift */,
+				EA2A1CC32AA06FB7002FE7B5 /* AchievementView.swift */,
 				EA6571C52A95D12F00D8AAC8 /* EnemyView.swift */,
 				EABA5EA22A9F11B800B178CD /* MenuView.swift */,
 				EABA5EA42A9F120900B178CD /* VictoryView.swift */,
@@ -203,9 +209,11 @@
 				EA92FC002A83613000BA9242 /* Modifiers.swift in Sources */,
 				EABA5EA52A9F120900B178CD /* VictoryView.swift in Sources */,
 				EA92FC072A83677400BA9242 /* PlaySound.swift in Sources */,
+				EA2A1CC42AA06FB7002FE7B5 /* AchievementView.swift in Sources */,
 				EA6571CE2A95E9CB00D8AAC8 /* HowToPlayView.swift in Sources */,
 				EABA5EA72A9F121A00B178CD /* ResultView.swift in Sources */,
 				EA6571C62A95D12F00D8AAC8 /* EnemyView.swift in Sources */,
+				EA2A1CC22AA06E97002FE7B5 /* Achievement.swift in Sources */,
 				EABA5EA32A9F11B800B178CD /* MenuView.swift in Sources */,
 				EA92FC022A83634300BA9242 /* DiceView.swift in Sources */,
 				EA92FBF12A835D1500BA9242 /* ContentView.swift in Sources */,

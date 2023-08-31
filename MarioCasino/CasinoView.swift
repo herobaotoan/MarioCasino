@@ -38,7 +38,10 @@ struct CasinoView: View {
     @State var levelResult = "WON!"
     //Leaderboard
     @State var username = "MARIO"
-    @State var leaderboard : [String: Int] = UserDefaults.standard.object(forKey: "Leaderboard") as? [String: Int] ?? [:]
+    @State var leaderboard : [String: Int] = UserDefaults.standard.object(forKey: "Leaderboard") as? [String: Int] ?? ["Developer":99]
+    //Achievement
+    @State var achievement : [Bool] = UserDefaults.standard.array(forKey: "Achievement") as? [Bool] ?? [false,false,false]
+    @State var ACM1 = 0
     //Timer
     @State var timeRemaining = 10
     @State var isTimerRunning = false
@@ -58,6 +61,8 @@ struct CasinoView: View {
             CurrentEnemyHP -= (i + 1) * Stats[0]
         }
         updateEnemy()
+        //Achievement
+        ACM1 += 1
     }
 
     func enemyAttack()
@@ -255,7 +260,7 @@ struct CasinoView: View {
                 MenuView(enable: $mainMenuUI, howToPlayViewEnable: $informationUI, leaderboardViewEnable: $leaderboardUI)
             }
             if leaderboardUI == true {
-                LeaderboardView(enable: $leaderboardUI, dictionary: $leaderboard)
+                LeaderboardView(enable: $leaderboardUI, dictionary: $leaderboard, achievement: $achievement)
             }
         }.sheet(isPresented: $informationUI){
             HowToPlayView()
