@@ -33,14 +33,16 @@ struct CasinoView: View {
     @State var informationUI = false
     @State var leaderboardUI = false
     @State var resultUI = false
+    @State var levelResult = "WON!"
     @State var chooseStatUI = false
     @State var victoryUI = true
-    @State var levelResult = "WON!"
+    @State var achievementUI = false
     //Leaderboard
     @State var username = "MARIO"
     @State var leaderboard : [String: Int] = UserDefaults.standard.object(forKey: "Leaderboard") as? [String: Int] ?? ["Developer":99]
     //Achievement
     @State var achievement : [Bool] = UserDefaults.standard.array(forKey: "Achievement") as? [Bool] ?? [false,false,false]
+    @state var achievementIndex = 0
     @State var achievementProgression : [Int] = UserDefaults.standard.array(forKey: "Progression") as? [Int] ?? [0,0,0]
     @State var ACM1 = 0
     //Timer
@@ -68,6 +70,8 @@ struct CasinoView: View {
         UserDefaults.standard.set(achievementProgression, forKey: "Progression")
         if ACM1 >= 100
         {
+            achievementIndex = 0
+            achievementUI = true
             achievement[0] = true
             UserDefaults.standard.set(achievement, forKey: "Achievement")
         }
@@ -91,6 +95,19 @@ struct CasinoView: View {
             playSound(sound: "fail", type: "mp3")
             resultUI = true
             updateLevel()
+            //Achievement die 100 times
+            ACM2 += 1
+            achievementProgression[1] = ACM2
+            //update and save progression
+            UserDefaults.standard.set(achievementProgression, forKey: "Progression")
+            if ACM2 >= 100
+            {
+                achievementIndex = 1
+                achievementUI = true
+                achievement[1] = true
+                //Save achievement
+                UserDefaults.standard.set(achievement, forKey: "Achievement")
+            }
         }
     }
     
@@ -113,6 +130,13 @@ struct CasinoView: View {
                 Stats = [10, 100]
                 EXP = 0
                 playerLevel = 1
+                //Achievement defeat Bowser 1 time
+                achievementIndex = 2
+                achievementUI = true
+                achievement[2] = true
+                //Save achievement
+                UserDefaults.standard.set(achievement, forKey: "Achievement")
+            }
             }
             updateLevel()
         //If enemy still alive, attack player
@@ -263,6 +287,9 @@ struct CasinoView: View {
             }
             if victoryUI == true {
                 VictoryView(enable: $victoryUI, score: $score, username: $username, error: false, dictionary: $leaderboard)
+            }
+            if achievementUI == true {
+                AchievemenentView(enable: $chievementUI, achievement: $achievementIndex)
             }
             if mainMenuUI == true {
                 MenuView(enable: $mainMenuUI, howToPlayViewEnable: $informationUI, leaderboardViewEnable: $leaderboardUI)
