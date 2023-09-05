@@ -10,6 +10,7 @@ import SwiftUI
 struct AchievementView: View {
     var achieved : Bool
     var acm: Achievement
+    var progress: String
     var body: some View {
         if achieved {
             VStack{
@@ -27,6 +28,7 @@ struct AchievementView: View {
                     .padding(10)
                     .opacity(0.5)
                 Text(acm.name)
+                Text(progress)
             }
         }
     }
@@ -34,6 +36,6 @@ struct AchievementView: View {
 
 struct AchievementView_Previews: PreviewProvider {
     static var previews: some View {
-        AchievementView(achieved: false, acm: Achievement(id: 1, name: "100 Roll", imgName: "ACM1"))
+        AchievementView(achieved: false, acm: Achievement(id: 1, name: "100 Roll", imgName: "ACM1"), progress: "99/100")
     }
 }

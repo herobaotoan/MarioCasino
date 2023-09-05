@@ -14,16 +14,20 @@ struct MenuView: View {
     var body: some View {
         ZStack {
             //Background
-            LinearGradient(gradient: Gradient(colors: [Color.blue, Color.red]), startPoint: .leading, endPoint: .bottom)
-                .edgesIgnoringSafeArea(.all)
+            Image("background")
+                .resizable()
+//                .aspectRatio(contentMode: .fit)
+                .ignoresSafeArea()
             VStack {
                 //LOGO
                 Image("banner")
                     .resizable()
                     .scaledToFit()
                     .frame(minHeight: 130, idealHeight: 170, maxHeight: 200, alignment: .center)
+                Spacer()
                 Button{
                     enable = false
+                    playSound(sound: "bgm", type: "mp3")
                 } label: {
                     Text("PLAY")
                         .modifier(TextWhiteModifier(fontSize: 20))

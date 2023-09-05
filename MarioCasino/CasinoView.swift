@@ -35,21 +35,28 @@ struct CasinoView: View {
     @State var resultUI = false
     @State var levelResult = "WON!"
     @State var chooseStatUI = false
-    @State var victoryUI = true
+    @State var victoryUI = false
     @State var achievementUI = false
     //Leaderboard
     @State var username = "MARIO"
     @State var leaderboard : [String: Int] = UserDefaults.standard.object(forKey: "Leaderboard") as? [String: Int] ?? ["Developer":99]
     //Achievement
+    let ACM1 = Achievement(id: 1, name: "100 Roll", imgName: "ACM1")
+    let ACM2 = Achievement(id: 2, name: "100 Dead", imgName: "ACM2")
+    let ACM3 = Achievement(id: 3, name: "Win the game", imgName: "ACM3")
     @State var achievement : [Bool] = UserDefaults.standard.array(forKey: "Achievement") as? [Bool] ?? [false,false,false]
-    @state var achievementIndex = 0
+    @State var achievementIndex: Achievement = Achievement(id:99, name:"Empty", imgName:"empty")
     @State var achievementProgression : [Int] = UserDefaults.standard.array(forKey: "Progression") as? [Int] ?? [0,0,0]
-    @State var ACM1 = 0
+//    @State var ACM1Progress = achievementProgression[0]
+//    @State var ACM2Progress = achievementProgression[0]
     //Timer
     @State var timeRemaining = 10
     @State var isTimerRunning = false
     let timer = Timer.publish(every: 0.2, on: .main, in: .common).autoconnect()
     
+    func playBGM(){
+        playSound(sound: "bgm", type: "mp3")
+    }
     func rollDice(){
         currentDices = currentDices.map{ _ in
             Int.random(in: 0...5)
@@ -65,15 +72,18 @@ struct CasinoView: View {
         }
         updateEnemy()
         //Achievement Roll 100 times
-        ACM1 += 1
-        achievementProgression[0] = ACM1
-        UserDefaults.standard.set(achievementProgression, forKey: "Progression")
-        if ACM1 >= 100
+        if !achievement[0]
         {
-            achievementIndex = 0
-            achievementUI = true
-            achievement[0] = true
-            UserDefaults.standard.set(achievement, forKey: "Achievement")
+//            ACM1Progress += 1
+            achievementProgression[0] += 1
+            UserDefaults.standard.set(achievementProgression, forKey: "Progression")
+            if achievementProgression[0] >= 100
+            {
+                achievementIndex = ACM1
+                achievementUI = true
+                achievement[0] = true
+                UserDefaults.standard.set(achievement, forKey: "Achievement")
+            }
         }
     }
 
@@ -96,17 +106,20 @@ struct CasinoView: View {
             resultUI = true
             updateLevel()
             //Achievement die 100 times
-            ACM2 += 1
-            achievementProgression[1] = ACM2
-            //update and save progression
-            UserDefaults.standard.set(achievementProgression, forKey: "Progression")
-            if ACM2 >= 100
+            if !achievement[1]
             {
-                achievementIndex = 1
-                achievementUI = true
-                achievement[1] = true
-                //Save achievement
-                UserDefaults.standard.set(achievement, forKey: "Achievement")
+//                ACM2Progress += 1
+                achievementProgression[1] += 1
+                //update and save progression
+                UserDefaults.standard.set(achievementProgression, forKey: "Progression")
+                if achievementProgression[1] >= 100
+                {
+                    achievementIndex = ACM2
+                    achievementUI = true
+                    achievement[1] = true
+                    //Save achievement
+                    UserDefaults.standard.set(achievement, forKey: "Achievement")
+                }
             }
         }
     }
@@ -131,13 +144,18 @@ struct CasinoView: View {
                 EXP = 0
                 playerLevel = 1
                 //Achievement defeat Bowser 1 time
-                achievementIndex = 2
-                achievementUI = true
-                achievement[2] = true
-                //Save achievement
-                UserDefaults.standard.set(achievement, forKey: "Achievement")
+                if !achievement[2]
+                {
+                    achievementProgression[2] = 1
+                    UserDefaults.standard.set(achievementProgression, forKey: "Progression")
+                    achievementIndex = ACM3
+                    achievementUI = true
+                    achievement[2] = true
+                    //Save achievement
+                    UserDefaults.standard.set(achievement, forKey: "Achievement")
+                }
             }
-            }
+            
             updateLevel()
         //If enemy still alive, attack player
         } else {
@@ -289,13 +307,13 @@ struct CasinoView: View {
                 VictoryView(enable: $victoryUI, score: $score, username: $username, error: false, dictionary: $leaderboard)
             }
             if achievementUI == true {
-                AchievemenentView(enable: $chievementUI, achievement: $achievementIndex)
+                AchievementAlertView(enable: $achievementUI, achievement: $achievementIndex)
             }
             if mainMenuUI == true {
                 MenuView(enable: $mainMenuUI, howToPlayViewEnable: $informationUI, leaderboardViewEnable: $leaderboardUI)
             }
             if leaderboardUI == true {
-                LeaderboardView(enable: $leaderboardUI, dictionary: $leaderboard, achievement: $achievement)
+                LeaderboardView(enable: $leaderboardUI, dictionary: $leaderboard, achievement: $achievement, progression: $achievementProgression)
             }
         }.sheet(isPresented: $informationUI){
             HowToPlayView()

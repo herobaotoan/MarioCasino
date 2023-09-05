@@ -12,6 +12,7 @@ struct LeaderboardView: View {
     @State var timeRemaining = 10
     @Binding var dictionary: [String: Int]
     @Binding var achievement: [Bool]
+    @Binding var progression: [Int]
     var rank = 0
     
     let ACM1 = Achievement(id: 1, name: "100 Roll", imgName: "ACM1")
@@ -23,6 +24,10 @@ struct LeaderboardView: View {
         let sortedDict = dictionary.sorted(by: {$0.value < $1.value})
         let keys = sortedDict.map{$0.key}
         let values = sortedDict.map{$0.value}
+        //Progression
+        let ACM1Progress = "\(progression[0])\\100"
+        let ACM2Progress = "\(progression[1])\\100"
+        let ACM3Progress = "\(progression[2])\\1"
         ZStack{
             //Background
             RoundedRectangle(cornerRadius: 20)
@@ -48,9 +53,9 @@ struct LeaderboardView: View {
                 .frame(maxHeight: 400)
                 
                 HStack{
-                    AchievementView(achieved: achievement[0], acm: ACM1)
-                    AchievementView(achieved: achievement[1], acm: ACM2)
-                    AchievementView(achieved: achievement[2], acm: ACM3)
+                    AchievementView(achieved: achievement[0], acm: ACM1, progress: ACM1Progress)
+                    AchievementView(achieved: achievement[1], acm: ACM2, progress: ACM2Progress)
+                    AchievementView(achieved: achievement[2], acm: ACM3, progress: ACM3Progress)
                 }
             }
         }
